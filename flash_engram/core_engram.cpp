@@ -82,7 +82,8 @@ void _get_ngram_hashes_cpp(py::array_t<int64_t> input_ids, py::array_t<int64_t> 
     auto head_vocab_sizes_buf = head_vocab_sizes.request();
     int64_t* head_vocab_sizes_ptr = static_cast<int64_t*>(head_vocab_sizes_buf.ptr);
 
-    int threads = std::min(seq_len, omp_get_max_threads());
+    int desired = seq_len / 1000;
+    int threads = std::min(desired < 1 ? 1 : desired, omp_get_max_threads());
     for (int i = 0; i < batch_size; ++i) {
         const int64_t* shift0 = input_ptr + i * seq_len;
         int64_t* output = output_ptr + i * seq_len * max_ngram_size * n_head_per_ngram;
