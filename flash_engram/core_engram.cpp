@@ -207,5 +207,5 @@ PYBIND11_MODULE(core_engram, m) {
     m.def("_get_ngram_hashes_cpp", &_get_ngram_hashes_cpp, "A function for hash");
     m.def("_lookup_cpp_f32", &_lookup_cpp_f32, "A function for embedding f32 lookup");
     m.def("_lookup_cpp_f16", &_lookup_cpp_f16, "A function for embedding f16 lookup");
-    m.attr("__version__") = "0.0.1";
+    m.attr("__version__") = "0.1.0-beta0";
 }

@@ -30,7 +30,7 @@ ext_modules = [
 
 setup(
     name='flash_engram',
-    version='0.0.1',
+    version='0.1.0-beta0',
     author='boostkit',
     packages=find_packages(), 
     ext_modules=ext_modules,
