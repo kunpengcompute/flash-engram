@@ -43,7 +43,7 @@ pip install . --no-build-isolation
 cd example
 python engram_demo_v1.py
 ```
-
+注：若网络存在问题，可手动在huggingface官网下载deepseek-ai/DeepSeek-V3的tokenizer_config.json和tokenizer.json文件到本地目录/to/path/DeepSeek-V3，并指定tokenizer_name_or_path为/to/path/DeepSeek-V3
 # 贡献指南
 如果使用过程中有任何问题，或者需要反馈特性需求和bug报告，可以提交isssues联系我们，具体贡献方法可参考[这里](https://gitcode.com/boostkit/community/blob/master/docs/contributor/contributing.md)。
 
