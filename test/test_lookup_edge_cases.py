@@ -7,18 +7,6 @@ try:
 except ImportError:
     core_engram = None
 
-
-def _make_valid_args(dtype=np.float32):
-    vocab, dim = 100, 32
-    bs, slen, heads = 2, 5, 4
-    rng = np.random.default_rng(1)
-    weight = rng.normal(size=(vocab, dim)).astype(dtype)
-    indices = rng.integers(0, vocab, size=(bs, slen, heads)).astype(np.int64)
-    offsets = np.zeros(heads, dtype=np.int64)
-    output = np.zeros((bs * slen * heads, dim), dtype=dtype)
-    return weight, indices, offsets, output, vocab, dim, bs, slen, heads
-
-
 def _call_lookup(func, weight, indices, offsets, output, vocab, dim, bs, slen, heads, offsets_need=0):
     func(vocab, dim,
          weight.ctypes.data, indices.ctypes.data,
