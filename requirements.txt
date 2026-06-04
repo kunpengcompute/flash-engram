@@ -22,7 +22,7 @@ sympy==1.14.0
 tokenizers==0.22.2
 torch==2.8.0  --extra-index-url https://download.pytorch.org/whl/cpu
 tqdm==4.67.3
-transformers==4.57.3
+transformers==5.0.0rc3
 typing_extensions==4.15.0
 urllib3==2.7.0
 wheel==0.46.3
