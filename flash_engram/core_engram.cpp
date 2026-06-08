@@ -95,8 +95,15 @@ void _get_ngram_hashes_cpp(py::array_t<int64_t> input_ids, py::array_t<int64_t> 
             int64_t mix3 =  mix2 ^ x2;
             int64_t* output_head = output;
             for (size_t h = 0; h < n_head_per_ngram; ++h) {
-                output_head[h] = mix2 % head_vocab_sizes_ptr[h];
-                output_head[n_head_per_ngram + h] = mix3 % head_vocab_sizes_ptr[n_head_per_ngram + h];
+                int64_t mod2 = head_vocab_sizes_ptr[h];
+                int64_t r2 = mix2 % mod2;
+                if (r2 < 0) r2 += mod2;
+                output_head[h] = r2;
+                
+                int64_t mod3 = head_vocab_sizes_ptr[n_head_per_ngram + h];
+                int64_t r3 = mix3 % mod3;
+                if (r3 < 0) r3 += mod3;
+                output_head[n_head_per_ngram + h] = r3;
             }
         }
         else {
@@ -117,8 +124,15 @@ void _get_ngram_hashes_cpp(py::array_t<int64_t> input_ids, py::array_t<int64_t> 
                 int64_t mix3 =  mix2 ^ x2;
                 int64_t* output_head = output + j * max_ngram_size * n_head_per_ngram;
                 for (size_t h = 0; h < n_head_per_ngram; ++h) {
-                    output_head[h] = mix2 % head_vocab_sizes_ptr[h];
-                    output_head[n_head_per_ngram + h] = mix3 % head_vocab_sizes_ptr[n_head_per_ngram + h];
+                    int64_t mod2 = head_vocab_sizes_ptr[h];
+                    int64_t r2 = mix2 % mod2;
+                    if (r2 < 0) r2 += mod2;
+                    output_head[h] = r2;
+                    
+                    int64_t mod3 = head_vocab_sizes_ptr[n_head_per_ngram + h];
+                    int64_t r3 = mix3 % mod3;
+                    if (r3 < 0) r3 += mod3;
+                    output_head[n_head_per_ngram + h] = r3;
                 }
             }
         }
@@ -127,7 +141,10 @@ void _get_ngram_hashes_cpp(py::array_t<int64_t> input_ids, py::array_t<int64_t> 
 
 static inline svint64_t mod_emu(svbool_t pg, svint64_t a, svint64_t b) {
     svint64_t quot = svdiv_s64_z(pg, a, b);
-    return svmls_s64_z(pg, a, quot, b);
+    svint64_t rem = svmls_s64_z(pg, a, quot, b);
+    svbool_t neg = svcmplt_s64(pg, rem, svdup_n_s64(0));
+    svint64_t correction = svsel_s64(neg, b, svdup_n_s64(0));
+    return svadd_s64_z(pg, rem, correction);
 }
 
 void _get_ngram_hashes_sve_optimized(py::array_t<int64_t> input_ids, py::array_t<int64_t> output_ids, 
