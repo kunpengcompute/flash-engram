@@ -37,11 +37,16 @@ flash-engram 是面向 DeepSeek-V3 Engram 模块的鲲鹏亲和加速库，针�
 
 ```text
 ├── LICENSE
-├── README.md
+├── README.md                  # 中文文档
+├── README_EN.md               # English documentation
 ├── requirements.txt          # 项目依赖
 ├── setup.py                  # 构建与安装脚本
 ├── example/
 │   └── engram_demo_v1.py     # 使用示例（适配后）
+├── docs/
+│   └── zh/
+│       └── public_sys-resources/
+│           └── icon-note.gif  # 说明 blockquote 标识
 └── flash_engram/             # Python 包源码
     ├── __init__.py
     ├── python_wrapper.py     # Python 接口封装
@@ -56,7 +61,7 @@ flash-engram 是面向 DeepSeek-V3 Engram 模块的鲲鹏亲和加速库，针�
    pip install -r requirements.txt
    ```
 
-2. 源码编译安装 flash_engram。
+2. 源码编译安装flash_engram。
 
    ```shell
    pip install . --no-build-isolation
@@ -69,7 +74,7 @@ flash-engram 是面向 DeepSeek-V3 Engram 模块的鲲鹏亲和加速库，针�
    python engram_demo_v1.py
    ```
 
-> ![说明](docs/figures/note.png) **说明**：若网络存在问题，可手动在huggingface官网下载deepseek-ai/DeepSeek-V3的tokenizer_config.json和tokenizer.json文件到本地目录/to/path/DeepSeek-V3，并指定tokenizer_name_or_path为/to/path/DeepSeek-V3
+> ![](./docs/zh/public_sys-resources/icon-note.gif) **说明**：若网络存在问题，可手动在huggingface官网下载deepseek-ai/DeepSeek-V3的tokenizer_config.json和tokenizer.json文件到本地目录/to/path/DeepSeek-V3，并指定tokenizer_name_or_path为/to/path/DeepSeek-V3
 
 ## 接口说明
 

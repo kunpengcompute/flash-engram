@@ -1,6 +1,6 @@
 # flash-engram Introduction
 
-[简体中文](./README.md)|English
+English|[简体中文](./README.md)
 
 flash-engram is a Kunpeng-optimized acceleration library for the DeepSeek-V3 Engram module. It targets the two main performance bottlenecks of the head-CPU stage: hash computation and Embedding table lookup.
 
@@ -69,7 +69,7 @@ For these two challenges, the Kunpeng BoostKit team built the Engram acceleratio
    python engram_demo_v1.py
    ```
 
-> ![note](docs/figures/note.png) **Note**: If network access is unavailable, manually download the `tokenizer_config.json` and `tokenizer.json` files of `deepseek-ai/DeepSeek-V3` from the Hugging Face website into the local directory `/to/path/DeepSeek-V3`, and set `tokenizer_name_or_path` to `/to/path/DeepSeek-V3`.
+> ![](./docs/zh/public_sys-resources/icon-note.gif) **Note:** If network access is unavailable, manually download the `tokenizer_config.json` and `tokenizer.json` files of `deepseek-ai/DeepSeek-V3` from the Hugging Face website into the local directory `/to/path/DeepSeek-V3`, and set `tokenizer_name_or_path` to `/to/path/DeepSeek-V3`.
 
 ## Interface Description
 
