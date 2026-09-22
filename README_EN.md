@@ -37,11 +37,16 @@ For these two challenges, the Kunpeng BoostKit team built the Engram acceleratio
 
 ```text
 ├── LICENSE
-├── README.md
+├── README.md                  # Chinese documentation
+├── README_EN.md               # English documentation
 ├── requirements.txt          # project dependencies
 ├── setup.py                  # build & install script
 ├── example/
 │   └── engram_demo_v1.py     # usage example (adapted)
+├── docs/
+│   └── zh/
+│       └── public_sys-resources/
+│           └── icon-note.gif  # note blockquote icon
 └── flash_engram/             # Python package source
     ├── __init__.py
     ├── python_wrapper.py     # Python wrapper
