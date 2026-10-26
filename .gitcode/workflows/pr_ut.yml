@@ -1,0 +1,55 @@
+name: pr ut
+
+on:
+  workflow_call:
+    inputs:
+      CP_DOCKER_IMG:
+        required: true
+        type: string
+      pr_id:
+        required: true
+        type: string
+      runs_on_arch:
+        required: false
+        type: string
+        default: "arm"
+      target_branch:
+        required: true
+        type: string
+jobs:
+  JOB_Compile:
+    name: Compile
+    select: selected_by_default
+    needs: [ ]
+    runs-on: [ self-hosted, os=euler, arch=arm64, type=pr, flavor=medium ]
+    container:
+      image: ${{ inputs.CP_DOCKER_IMG }}
+      # options: --user root
+
+    steps:
+      - name: Checkout repository with pre merge
+        uses: checkout
+        with:
+          repository: ${{atomgit.repositoryurl}}
+          allow-unsafe-pr-checkout: true
+          ref: refs/merge-requests/${{ inputs.pr_id }}/merge
+
+      # - name: oidc-auth
+      #   uses: huaweicloud-oidc-auth
+      #   with:
+      #     audience: mindie_pr_trust
+      #     region: cn-north-4
+      #     agency_urn: iam::0d335fcedd00f3140f8ac01eaca892e0:agency:mindie_pr_trust
+      #     provider_urn: iam::0d335fcedd00f3140f8ac01eaca892e0:oidcProvider:mindie_pr_trust
+
+      - name: Execute_shell
+        id: exec_shell_step
+        run: |-
+            set -e
+            pip config --user set global.index https://mirrors.huaweicloud.com/repository/pypi
+            pip config --user set global.index-url https://mirrors.huaweicloud.com/repository/pypi/simple
+            pip config --user set global.trusted-host mirrors.huaweicloud.com
+            python3 -m pip install -r requirements.txt
+            python3 -m pip install . --no-build-isolation
+            cd example
+            python3 engram_demo_v1.py
